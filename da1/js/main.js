@@ -10,21 +10,28 @@ window.onload = function() {
     // loading functions to reflect where you are putting the assets.
     // All loading functions will typically all be found inside "preload()".
     
-    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
+    var game = new Phaser.Game( 800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update} );
     
     function preload() {
         // Load an image and call it 'logo'.
-		game.load.image('bg', '/assets/Sprites/Background_Stolen.png');
-        game.load.image( 'logo', '/assets/Sprites/Flamango_Test.gif');
+		game.load.path = 'assets/Sprites/';
+        game.load.crossOrigin = 'anonymous';
+        game.load.image('bg', 'Background_Stolen.png');
+        game.load.image( 'logo', 'Flamango_Test.gif');
+		game.load.path = 'assets/buttons/';
+		game.load.spritesheet('button', 'button_click.png', 128, 64);
     }
     
     var bouncy;
 	var bg;
-    
+    var button;
     function create() {
 		 
         // Create a sprite at the center of the screen using the 'logo' image.
-		bg = game.add.sprite(game.world.centerX, game.world.centerY, 'bg');
+		
+		bg = game.add.sprite(game.world.centerX - 400, game.world.centerY - 300, 'bg');
+		button = game.add.button(game.world.centerX - 64, 400, 'button', actionOnClick, this, 2, 1, 0);  
+																	//1 = idle, 0 = hover, 2 = click
         bouncy = game.add.sprite( game.world.centerX, game.world.centerY, 'logo' );
         // Anchor the sprite at its center, as opposed to its top-left corner.
         // so it will be truly centered.
@@ -38,9 +45,13 @@ window.onload = function() {
         // Add some text using a CSS style.
         // Center it in X, and position its top 15 pixels from the top of the world.
         var style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
-        var text = game.add.text( game.world.centerX, 15, "Build something amazing.", style );
+        var text = game.add.text( game.world.centerX, 15, "Frick off", style );
         text.anchor.setTo( 0.5, 0.0 );
     }
+	
+	function actionOnClick(){
+		console.log('clicked!');
+	}
     
     function update() {
         // Accelerate the 'logo' sprite towards the cursor,
