@@ -20,7 +20,7 @@ window.onload = function() {
         game.load.image( 'logo', 'Sprites/Flamango_Test.gif');
 		game.load.path = 'assets/';
 		game.load.spritesheet('button', 'buttons/button_click.png', 128, 64);
-		game.load.image('flamango', 'Sprites/Flamango_Test.gif');
+		game.load.spritesheet('flamango', 'Sprites/Mango_Idle_Sheet.png', 32, 64, 2);
 		game.load.image('newBG', 'Sprites/newBG.jpg');
     }
     
@@ -90,6 +90,9 @@ window.onload = function() {
 		game.physics.enable(mango, Phaser.Physics.ARCADE );
 		//mango.body.bounce.y = 0.1;
 		mango.body.collideWorldBounds = true;
+		mango.scale.setTo(2,2);
+		var idle = mango.animations.add('idle');
+		mango.animations.play('idle', 2, true);
 
 	}
 	
