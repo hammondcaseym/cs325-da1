@@ -21,7 +21,7 @@ window.onload = function() {
 		game.load.path = 'assets/';
 		game.load.spritesheet('button', 'buttons/button_click.png', 128, 64);
 		game.load.spritesheet('flamango', 'Sprites/Mango_Idle_Sheet.png', 32, 64, 2);
-		game.load.image('bar', 'Sprites/Bar.png');
+		game.load.image('background', 'Sprites/background.png');
     }
     
 	
@@ -74,7 +74,7 @@ window.onload = function() {
 	var mango;
 	function loadNew(){
 				//load new scene
-		game.add.sprite(game.world.centerX - 400, game.world.centerY - 300, 'bar');
+		game.add.sprite(game.world.centerX - 400, game.world.centerY - 300, 'background');
 
 		//mango.anchor.setTo(0.5,0.5);
 		
