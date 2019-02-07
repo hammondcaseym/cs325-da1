@@ -24,6 +24,8 @@ window.onload = function() {
 		game.load.image('background', 'Sprites/background.png');
 		game.load.spritesheet('item', 'Sprites/mango.gif', 32,32);
 		game.load.spritesheet('finish','Sprites/finish.gif',800,600);
+		game.load.audio('success', 'sounds/coin.wav');
+		game.load.audio('winning','sounds/winning.wav');
     }
     
 	
@@ -98,6 +100,8 @@ window.onload = function() {
 	var timer_text;
 	var timer_label;
 	var itemCount = 20;
+	var success;
+	var winning;
 	function beginPlay(){
 		
 		game.time.desiredFps = 30;
@@ -105,7 +109,9 @@ window.onload = function() {
 		//the following grouping and randomly placing sprites code is from https://codepen.io/Samid737/pen/RLQBqM?editors=1010
 		
 		placeItems();
-			
+		success = game.add.audio('success');
+		winning = game.add.audio('winning');		
+		game.sound.setDecodedCallback([ success,winning ], playSound, this);
 		//item = game.add.sprite(game.world.centerX, game.world.centerY, 'item');
 		mango = game.add.sprite(game.world.centerX-280, game.world.centerY-150, 'flamango');
 		game.physics.enable(mango, Phaser.Physics.ARCADE );
@@ -136,6 +142,9 @@ window.onload = function() {
 
 	}
 	
+	function playSound(){
+		success.play();
+	}
 	
 	function placeItems(){
 		
@@ -161,7 +170,9 @@ window.onload = function() {
 	var finish;
 	var score;
 	function endGame(){
+		
 		finish = game.add.sprite(game.world.centerX-400, game.world.centerY-300, 'finish');
+		winning.play();
 		var style = { font: "35px Verdana", fill: "#FFFFFF", align: "center" };
 		score = game.add.text( game.world.centerX-100, 265, "SCORE:  ", style);
 		var final = game.add.text(game.world.centerX + 50, 265, points, style);
@@ -221,6 +232,7 @@ window.onload = function() {
 				if((Math.sqrt((item.x - mango.x)*(item.x - mango.x) + (item.y - mango.y)*(item.y - mango.y)) <= 30.0) && timer > 0) {
 					console.log("Within Proximity!");
 					item.destroy();
+					playSound();
 					points += 100;
 					pointText.setText(points);
 					console.log(points);
