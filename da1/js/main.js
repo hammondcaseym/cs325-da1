@@ -21,7 +21,7 @@ window.onload = function() {
 		game.load.path = 'assets/';
 		game.load.spritesheet('button', 'buttons/button_click.png', 128, 64);
 		game.load.spritesheet('flamango', 'Sprites/Mango_Idle_Sheet.png', 32, 64, 2);
-		game.load.image('newBG', 'Sprites/newBG.jpg');
+		game.load.image('bar', 'Sprites/Bar.png');
     }
     
 	
@@ -74,7 +74,7 @@ window.onload = function() {
 	var mango;
 	function loadNew(){
 				//load new scene
-		game.add.sprite(game.world.centerX - 400, game.world.centerY - 300, 'newBG');
+		game.add.sprite(game.world.centerX - 400, game.world.centerY - 300, 'bar');
 
 		//mango.anchor.setTo(0.5,0.5);
 		
@@ -85,12 +85,12 @@ window.onload = function() {
 	function beginPlay(){
 		
 		game.time.desiredFps = 30;
-		game.physics.arcade.gravity.y = 200;
+		//game.physics.arcade.gravity.y = 200;
 		mango = game.add.sprite(game.world.centerX-280, game.world.centerY-150, 'flamango');
 		game.physics.enable(mango, Phaser.Physics.ARCADE );
 		//mango.body.bounce.y = 0.1;
 		mango.body.collideWorldBounds = true;
-		mango.scale.setTo(2,2);
+		//mango.scale.setTo(2,2);
 		var idle = mango.animations.add('idle');
 		mango.animations.play('idle', 2, true);
 
@@ -116,32 +116,23 @@ window.onload = function() {
         bouncy.rotation = game.physics.arcade.accelerateToPointer( bouncy, game.input.activePointer, 500, 500, 500 );
     
 	
-	if (game.input.keyboard.isDown(Phaser.Keyboard.A))
+    if (game.input.keyboard.isDown(Phaser.Keyboard.A))
     {
-        mango.body.velocity.x = -150;
-		console.log('moved LEFT!');
+        mango.x -= 4;
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.D))
     {
-        mango.body.velocity.x = 150;
-		console.log('moved RIGHT!');
+        mango.x += 4;
     }
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.W))
     {
         mango.y -= 4;
-		console.log('moved UP!');
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
     {
         mango.y += 4;
-		console.log('moved DOWN!');
     }
-	else if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && mango.body.onFloor() && game.time.now > jumpTimer){
-		mango.body.velocity.y = -200;
-		jumpTimer = game.time.now + 750;
-		
-	}
 	
 	
 	}
