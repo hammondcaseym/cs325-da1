@@ -12,6 +12,18 @@ window.onload = function() {
 		//load zerosuit sample
 		game.load.image('zerosuit', 'Sprites/zerosuit.png');
 		
+		
+		//load actual game assets like the character spritesheets and what-not
+		game.load.image('female','Sprites/female.png');
+		game.load.spritesheet('fm_walking_up', 'Sprites/fm_walk_up.png',32,48,8);
+		game.load.spritesheet('fm_walking_down', 'Sprites/fm_walk_down.png',32,48,8);
+		game.load.spritesheet('fm_walking_left', 'Sprites/fm_walk_left.png',32,48,8);
+		game.load.spritesheet('fm_dead', 'Sprites/fm_dead.png',34,51,5);
+		game.load.spritesheet('fm_shoot_up', 'Sprites/fm_walk_up.png',43,58,8);
+		game.load.spritesheet('fm_shoot_down', 'Sprites/fm_walk_up.png',39,51,8);
+		game.load.spritesheet('fm_shoot_left', 'Sprites/fm_walk_up.png',51,58,8);
+		
+		
 	}
 	
 	//sample assets
@@ -29,7 +41,8 @@ window.onload = function() {
 	var timer = 6;
 	var timer_ms;
 
-	var direction1, direction2; //direction that each player is currently facing
+	var direction1 = -1;
+	var direction2 = -1; //direction that each player is currently facing
 	var text; //any text that appears on the screen
 	var button; //button to press
 	var title,subtitle,subtitle2;
@@ -41,7 +54,7 @@ window.onload = function() {
 	
 	
 		game.stage.backgroundColor = '#FFFFF0'; //makes background color slightly yellow
-
+/*
 		zerosuit = game.add.sprite(game.world.centerX-350,game.world.centerY-100, 'zerosuit');
 		
 		title = game.add.text(0, 0, "FROST", style_title);
@@ -80,15 +93,29 @@ window.onload = function() {
 		}
 		
 	}
-		
-	function scene2(){
+*/
+		scene2();
 
-		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly cyan
+
 
 	}
-
 	
+	var inScene2 = false;
+	var female;
+		function scene2(){
+		inScene2 = true;
+		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
+		female = game.add.sprite(100,100,'female');
+		game.physics.enable(female, Phaser.Physics.ARCADE );
+		female.anchor.setTo(0.5,0.5);
+		female.body.collideWorldBounds = true;
+		
+
+
+
 	}
+	
+	
 	function demoScene(w,x,y,z){
 		//destroy previous scene so that it doesn't lag the game
 		w.destroy();
@@ -102,8 +129,69 @@ window.onload = function() {
 	
 	
 	function update(){
+		
+		if(inScene2){
+			if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
+				if(direction1!=1){
+					direction1 = 1;
+					female.destroy();
+					female = game.add.sprite(female.x, female.y, 'fm_walking_left');
+					
+					female.animations.add('walk_l');
+					female.animations.play('walk_l', 15, true);
+				}else if(direction1 == 1){
 
+					female.animations.play('walk_l', 15, true);
+				}
+				female.x -= 4;
+				
+			}
+			else if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
+				if(direction1!=0){
+					direction1 = 0;
+					female.destroy();
+					female = game.add.sprite(female.x+32, female.y, 'fm_walking_left');
+					
+					
+					female.animations.add('walk_l');
+					female.animations.play('walk_l', 15, true);
+					female.scale.x *= -1;
+				}else if(direction1 == 0){
+					female.animations.play('walk_l', 15, true);
+					
+				}
+				female.x += 4;
+				
+			}
+
+			else if (game.input.keyboard.isDown(Phaser.Keyboard.W))
+			{
+				
+			}
+			else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
+			{
+				
+			}
+			else{
+				if(direction1!=2){
+					direction1 = 2;
+					female.destroy();
+					female = game.add.sprite(female.x, female.y, 'female');
+				}else if(direction1 == 2){
+					console.log("Idling...");
+					
+				}
+			}
+		
+		}
+			
+			
 	}
+		
+		
+		
+
+	
 	
 	function render(){
 		
