@@ -214,18 +214,18 @@ window.onload = function() {
 				if(direction2!=LEFT){
 					direction2 = LEFT;
 					male.animations.add('walk_L', [117,118,119,120,121,122,123,124,125]);
-					male.animations.play('walk_L',15,true);
+					male.animations.play('walk_L',15,false);
 				}else if(direction2 == LEFT){
-					male.animations.play('walk_l', 15, true);
+					male.animations.play('walk_l', 15, false);
 				}
 				male.x -= 4;
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
 				if(direction2!=RIGHT){
 					direction2 = RIGHT;
 					male.animations.add('walk_R', [143,144,145,146,147,148,149,150,151]);
-					male.animations.play('walk_R',15,true);
+					male.animations.play('walk_R',15,false);
 				}else if(direction2 == RIGHT){
-					male.animations.play('walk_R', 15, true);
+					male.animations.play('walk_R', 15, false);
 				}
 				male.x += 4;
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
@@ -233,9 +233,9 @@ window.onload = function() {
 				if(direction2!=UP){
 					direction2 = UP;
 					male.animations.add('walk_U', [104,105,106,107,108,109,110,111,112]);
-					male.animations.play('walk_U',15,true);
+					male.animations.play('walk_U',15,false);
 				}else if(direction2 == UP){
-					male.animations.play('walk_U', 15, true);
+					male.animations.play('walk_U', 15, false);
 				}
 				male.y -= 4;
 			}
@@ -243,26 +243,24 @@ window.onload = function() {
 				if(direction2!=DOWN){
 					direction2 = DOWN;
 					male.animations.add('walk_D', [130,131,132,133,134,135,136,137,138]);
-					male.animations.play('walk_D',15,true);
+					male.animations.play('walk_D',15,false);
 				}else if(direction2 == DOWN){
-					male.animations.play('walk_D', 15, true);
+					male.animations.play('walk_D', 15, false);
 					
 				}
 				male.y += 4;
 			}else{	
 				if(direction2==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.loadTexture('ma',16,false);
-						male.animations.add('attack_D', [17,18,19,20,21,16]);
+						male.animations.add('attack_D', [299,300,301,302,303,304,130]);
 						male.animations.play('attack_D',15,false);
-						male.loadTexture('m',138,false);
 				} else if(direction2 == UP && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_U', [208,209,210,211,212,213,214,215,216,217,218,219,220,156]);
+						male.animations.add('attack_U', [273,274,275,276,277,278,156]);
 						male.animations.play('attack_U',15,false);
 				}else if(direction2 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_L', [221,222,223,224,225,226,227,228,229,230,231,232,233,169]);
+						male.animations.add('attack_L', [286,287,288,289,290,291,169]);
 						male.animations.play('attack_L',15,false);
 				}else if((direction2 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_R', [247,248,249,250,251,252,253,254,255,256,257,258,259,195]);
+						male.animations.add('attack_R', [292,293,294,295,296,297,195]);
 						male.animations.play('attack_R',15,false);
 						
 					}
