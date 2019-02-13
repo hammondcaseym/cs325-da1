@@ -150,14 +150,12 @@ window.onload = function() {
 				if(direction1!=0){
 					direction1 = 0;
 					female.destroy();
-					female = game.add.sprite(female.x+32, female.y, 'fm_walking_left');
-					
-					
-					female.animations.add('walk_l');
-					female.animations.play('walk_l', 15, true);
+					female = game.add.sprite(female.x, female.y, 'fm_walking_left');
+					female.animations.add('walk_r');
+					female.animations.play('walk_r', 15, true);
 					female.scale.x *= -1;
 				}else if(direction1 == 0){
-					female.animations.play('walk_l', 15, true);
+					female.animations.play('walk_r', 15, true);
 					
 				}
 				female.x += 4;
@@ -166,19 +164,46 @@ window.onload = function() {
 
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.W))
 			{
-				
+			
+				if(direction1!=3){
+					direction1 = 3;
+					female.destroy();
+					female = game.add.sprite(female.x, female.y, 'fm_walking_up');
+					
+					
+					female.animations.add('walk_u');
+					female.animations.play('walk_u', 15, true);
+					female.scale.x *= -1;
+				}else if(direction1 == 3){
+					female.animations.play('walk_l', 15, true);
+					
+				}
+				female.y -= 4;
+
+			
 			}
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
 			{
 				
+				if(direction1!=4){
+					direction1 = 4;
+					female.destroy();
+					female = game.add.sprite(female.x, female.y, 'fm_walking_down');
+					
+					
+					female.animations.add('walk_d');
+					female.animations.play('walk_d', 15, true);
+					female.scale.x *= -1;
+				}else if(direction1 == 0){
+					female.animations.play('walk_d', 15, true);
+					
+				}
+				female.y += 4;
+				
+				
 			}
 			else{
-				if(direction1!=2){
-					direction1 = 2;
-					female.destroy();
-					female = game.add.sprite(female.x, female.y, 'female');
-				}else if(direction1 == 2){
-					console.log("Idling...");
+				female.frame = 0; //sets current animation to frame 0 to pause the character in any direction, more realistic, less clunky
 					
 				}
 			}
@@ -186,7 +211,7 @@ window.onload = function() {
 		}
 			
 			
-	}
+	
 		
 		
 		
