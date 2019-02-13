@@ -116,9 +116,24 @@ window.onload = function() {
 		
 		
 		//sprite.animations.add('name',[array of frames],frames/sec,boolean for loop);
-
-
-
+		female.animations.add('fmwalk_L', [117,118,119,120,121,122,123,124,125]);
+		female.animations.add('fmwalk_R', [143,144,145,146,147,148,149,150,151]);
+		female.animations.add('fmwalk_U', [104,105,106,107,108,109,110,111,112]);
+		female.animations.add('fmwalk_D', [130,131,132,133,134,135,136,137,138]);
+		female.animations.add('fmattack_D', [234,235,236,237,238,239,240,241,242,243,244,245,246,182]);
+		female.animations.add('fmattack_U', [208,209,210,211,212,213,214,215,216,217,218,219,220,156]);
+		female.animations.add('fmattack_L', [221,222,223,224,225,226,227,228,229,230,231,232,233,169]);
+		female.animations.add('fmattack_R', [247,248,249,250,251,252,253,254,255,256,257,258,259,195]);
+		
+		
+		male.animations.add('walk_L', [117,118,119,120,121,122,123,124,125]);
+		male.animations.add('walk_R', [143,144,145,146,147,148,149,150,151]);
+		male.animations.add('walk_U', [104,105,106,107,108,109,110,111,112]);
+		male.animations.add('walk_D', [130,131,132,133,134,135,136,137,138]);
+		male.animations.add('attack_D', [299,300,301,302,303,304,130]);
+		male.animations.add('attack_U', [273,274,275,276,277,278,156]);
+		male.animations.add('attack_L', [286,287,288,289,290,291,169]);
+		male.animations.add('attack_R', [292,293,294,295,296,297,195]);
 	}
 	
 	
@@ -132,51 +147,56 @@ window.onload = function() {
 	}
 	
 
-	
+	var fmattacking = false;
+	var mattacking = false;
+	var fidle = true;
+	var midle = true;
 	
 	function update(){
 		
 		if(inScene2){
 			if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
+				fmattacking = false;
+				fidle = false;
 				if(direction1!=LEFT){
 					direction1 = LEFT;
-					female.animations.add('walk_L', [117,118,119,120,121,122,123,124,125]);
-					female.animations.play('walk_L',15,false);
+					female.animations.play('fmwalk_L',15,true);
 				}else if(direction1 == LEFT){
-					female.animations.play('walk_l', 15, false);
+					female.animations.play('fmwalk_l', 15, true);
 				}
 				female.x -= 4;
 			}
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
+				fmattacking = false;
+				fidle = false;
 				if(direction1!=RIGHT){
 					direction1 = RIGHT;
-					female.animations.add('walk_R', [143,144,145,146,147,148,149,150,151]);
-					female.animations.play('walk_R',15,false);
+					female.animations.play('fmwalk_R',15,true);
 				}else if(direction1 == RIGHT){
-					female.animations.play('walk_R', 15, false);
+					female.animations.play('fmwalk_R', 15, true);
 				}
 				female.x += 4;
 			}
 
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.W))
-			{
+			{	fidle = false;
+				fmattacking = false;
 				if(direction1!=UP){
 					direction1 = UP;
-					female.animations.add('walk_U', [104,105,106,107,108,109,110,111,112]);
-					female.animations.play('walk_U',15,false);
+					female.animations.play('fmwalk_U',15,true);
 				}else if(direction1 == UP){
-					female.animations.play('walk_U', 15, false);
+					female.animations.play('fmwalk_U', 15, true);
 				}
 				female.y -= 4;
 			}
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
-			{
+			{	fidle = false;
+				fmattacking = false;
 				if(direction1!=DOWN){
 					direction1 = DOWN;
-					female.animations.add('walk_D', [130,131,132,133,134,135,136,137,138]);
-					female.animations.play('walk_D',15,false);
+					female.animations.play('fmwalk_D',15,true);
 				}else if(direction1 == DOWN){
-					female.animations.play('walk_D', 15, false);
+					female.animations.play('fmwalk_D', 15, true);
 					
 				}
 				female.y += 4;
@@ -185,19 +205,27 @@ window.onload = function() {
 			
 			else{	
 				if(direction1==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-						female.animations.add('attack_D', [234,235,236,237,238,239,240,241,242,243,244,245,246,182]);
-						female.animations.play('attack_D',15,false);
+						fidle = false;
+						fmattacking = true;
+						female.animations.play('fmattack_D',15,false);
 				} else if(direction1 == UP && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-						female.animations.add('attack_U', [208,209,210,211,212,213,214,215,216,217,218,219,220,156]);
-						female.animations.play('attack_U',15,false);
+						fidle = false;
+						fmattacking = true;
+						female.animations.play('fmattack_U',15,false);
 				}else if(direction1 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-						female.animations.add('attack_L', [221,222,223,224,225,226,227,228,229,230,231,232,233,169]);
-						female.animations.play('attack_L',15,false);
+						fidle = false;
+						fmattacking = true;
+						female.animations.play('fmattack_L',15,false);
 				}else if((direction1 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-						female.animations.add('attack_R', [247,248,249,250,251,252,253,254,255,256,257,258,259,195]);
-						female.animations.play('attack_R',15,false);
+						fidle = false;
+						fmattacking = true;
+						female.animations.play('fmattack_R',15,false);
 						
 					}
+				else{
+					fidle = true;
+					fmattacking = false;
+				}
 			}
 			
 			
@@ -211,64 +239,105 @@ window.onload = function() {
 					
 			
 			if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+				midle = false;
+				mattacking = false;
 				if(direction2!=LEFT){
 					direction2 = LEFT;
-					male.animations.add('walk_L', [117,118,119,120,121,122,123,124,125]);
-					male.animations.play('walk_L',15,false);
+					
+					male.animations.play('walk_L',15,true);
 				}else if(direction2 == LEFT){
-					male.animations.play('walk_l', 15, false);
+					male.animations.play('walk_l', 15, true);
 				}
 				male.x -= 4;
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+				midle = false;
+				mattacking = false;
 				if(direction2!=RIGHT){
 					direction2 = RIGHT;
-					male.animations.add('walk_R', [143,144,145,146,147,148,149,150,151]);
-					male.animations.play('walk_R',15,false);
+					
+					male.animations.play('walk_R',15,true);
 				}else if(direction2 == RIGHT){
-					male.animations.play('walk_R', 15, false);
+					male.animations.play('walk_R', 15, true);
 				}
 				male.x += 4;
 			}else if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
-			{
+			{	midle = false;
+				mattacking = false;
 				if(direction2!=UP){
 					direction2 = UP;
-					male.animations.add('walk_U', [104,105,106,107,108,109,110,111,112]);
-					male.animations.play('walk_U',15,false);
+					
+					male.animations.play('walk_U',15,true);
 				}else if(direction2 == UP){
-					male.animations.play('walk_U', 15, false);
+					male.animations.play('walk_U', 15, true);
 				}
 				male.y -= 4;
 			}
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+				midle = false;
+				mattacking = false;
 				if(direction2!=DOWN){
 					direction2 = DOWN;
-					male.animations.add('walk_D', [130,131,132,133,134,135,136,137,138]);
-					male.animations.play('walk_D',15,false);
+					
+					male.animations.play('walk_D',15,true);
 				}else if(direction2 == DOWN){
-					male.animations.play('walk_D', 15, false);
+					male.animations.play('walk_D', 15, true);
 					
 				}
 				male.y += 4;
 			}else{	
 				if(direction2==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_D', [299,300,301,302,303,304,130]);
+						midle = false;
+						mattacking = true;
 						male.animations.play('attack_D',15,false);
 				} else if(direction2 == UP && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_U', [273,274,275,276,277,278,156]);
+						midle = false;
+						mattacking = true;
 						male.animations.play('attack_U',15,false);
 				}else if(direction2 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_L', [286,287,288,289,290,291,169]);
+						midle = false;
+						mattacking = true;
 						male.animations.play('attack_L',15,false);
 				}else if((direction2 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-						male.animations.add('attack_R', [292,293,294,295,296,297,195]);
+						midle = false;
+						mattacking = true;
 						male.animations.play('attack_R',15,false);
 						
 					}
+					else{
+						mattacking = false;
+						midle = true;
+					}
+			}
+			
+			if(midle){
+				if(direction2 == UP){
+					male.frame = 156;
+				} else if(direction2 == LEFT){
+					male.frame = 169;
+				} else if(direction2 == RIGHT){
+					male.frame = 195;
+				} else if(direction2 == DOWN){
+					male.frame = 130;
+				}
+				
+			}
+			
+			if(fidle){
+				if(direction1 == UP){
+					female.frame = 156;
+				} else if(direction1 == LEFT){
+					female.frame = 169;
+				} else if(direction1 == RIGHT){
+					female.frame = 195;
+				} else if(direction1 == DOWN){
+					female.frame = 130;
+				}
+				
 			}
 			
 		
-			}
 			
+		}	
 		
 	
 		
