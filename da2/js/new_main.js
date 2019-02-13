@@ -16,15 +16,18 @@ window.onload = function() {
 		//game.load.image('zerosuit', 'Sprites/zerosuit.png');
 
 		//load actual game assets like the character spritesheets and what-not
+		game.load.spritesheet('button', 'Sprites/button.png',128,64);
+		game.load.image('flake','Sprites/snowflake.png');
 		game.load.image('female','Sprites/female.png');
 		game.load.spritesheet('fm', 'Sprites/fm.png',64,64);
 		game.load.spritesheet('m','Sprites/male_sheet.png',64,64);
 		game.load.spritesheet('ma','Sprites/m_attack_sheet.png',192,192);
+		game.load.spritesheet('skelly','Sprites/skelly.png',64,64);
 	}
 	
 	//sample assets
 	
-	var zerosuit;
+	//var zerosuit;
 	
 	//end sample assets
 	
@@ -42,65 +45,56 @@ window.onload = function() {
 	var text; //any text that appears on the screen
 	var button; //button to press
 	var title,subtitle,subtitle2;
+	var snowflake;
+	var title, subtitle, dir_line1, dir_line2, dir_line3;
 	function create(){
 	
+		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
+
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+		
 	
-		var style_title = { font: "32px Forte", fill: "#000000" };
+	
+		game.time.desiredFps = 30;
+	
+		var style_title = { font: "32px Forte", fill: "#000000"};
 		var style_subtitle = {font: "24px Forte", fill: "#000000"};
-	
-	
-		game.stage.backgroundColor = '#FFFFF0'; //makes background color slightly yellow
-/*
-		zerosuit = game.add.sprite(game.world.centerX-350,game.world.centerY-100, 'zerosuit');
+		var style_dir = {font: "24px Corbel", fill: "#000000"};
 		
-		title = game.add.text(0, 0, "FROST", style_title);
-		subtitle = game.add.text(0, 0, "A Short Adventure Game", style_subtitle);
-		subtitle2 = game.add.text(0, 0, "For 2 Players", style_subtitle);
-
-		//determine current alpha channel, 0 for invisible, 1 for opaque
-		timer_ms = game.time.create(false);
-		timer_ms.loop(1500,update_ms,this);
-		timer_ms.start();
-
-		zerosuit.alpha = 0;
-		title.alpha = 0;
-		subtitle.alpha = 0;
-		subtitle2.alpha = 0;
-
-		game.add.tween(zerosuit).to( { alpha: 1 }, 4000, Phaser.Easing.Linear.None, true, 1, 0, true); 
-		title.alignTo(zerosuit, Phaser.RIGHT_CENTER, 16);
-		game.add.tween(title).to({alpha:1},2000,Phaser.Easing.Linear.None,true,0,0,true);
-		subtitle.alignTo(title, Phaser.RIGHT_BOTTOM, 16);
-		game.add.tween(subtitle).to({alpha:1},3000,Phaser.Easing.Linear.None,true,0,0,true);
-		subtitle2.alignTo(subtitle, Phaser.RIGHT_BOTTOM, 16);
-		game.add.tween(subtitle2).to({alpha:1},4000,Phaser.Easing.Linear.None,true,0,0,true);
-		console.log("Tweens Complete!");		
-				
-		//tween.to({alpha channel}, # time it takes to fade-in in ms, Phaser.Easing.Linear.None, true or false visibility for fade in, 0 or 1 for fade out, #times to complete (0 for single fade in), true or false visibility for fade out);
-	function update_ms(){
-		if(timer > 0){ //keep track of first scene time
-			timer--;
-			console.log("timer =  " + timer);
-		}else{
-			timer_ms.stop(); //stop timer so it doesn't keep doing the same thing over and over
-			demoScene(zerosuit,title,subtitle,subtitle2); //first scene finished, start next scene
-			scene2();
+		title = game.add.text(game.world.centerX-100, game.world.centerY-100, "FROST", style_title);
+		subtitle = game.add.text(game.world.centerX-150, game.world.centerY-50, "A 2 Player Adventure Game", style_subtitle);
+		
+		dir_line1 = game.add.text(150, 300, "Player 1                                       Player 2", style_dir);
+		dir_line2 = game.add.text(150, 350, "WASD for movement.          ARROW KEYS for movement.", style_dir);
+		dir_line3 = game.add.text(150, 400,   "(hold)L-Shift for Attack        (hold)R-CTRL for Attack", style_dir);
+		
+		button = game.add.button(300, 100, 'button', scene2, this, 2,1,0);
+		
+		
 			
-		}
+		
 		
 	}
-*/
-		scene2();
-
-
-
-	}
 	
+	/*
+*/
+
+	
+
+	var skelly;
+	var skellies;
+	var enemycount = 5;
 	var inScene2 = false;
 	var female;
 	var male;
 	var male_attack;
 		function scene2(){
+			goFS();
+			button.destroy();
+			demoScene(title,subtitle,dir_line1,dir_line2);
+			dir_line3.destroy();
+			
+			
 		inScene2 = true;
 		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
 		female = game.add.sprite(game.world.centerX-64,game.world.centerY,'fm');
@@ -112,6 +106,16 @@ window.onload = function() {
 		game.physics.enable(male, Phaser.Physics.ARCADE );
 		male.anchor.setTo(0.5,0.5);
 		male.body.collideWorldBounds = true;
+		
+		
+		skelly = game.add.sprite('skelly',[14]);
+		
+		
+		
+		placeEnemies();
+		
+		
+		
 		
 		
 		
@@ -134,8 +138,52 @@ window.onload = function() {
 		male.animations.add('attack_U', [273,274,275,276,277,278,156]);
 		male.animations.add('attack_L', [286,287,288,289,290,291,169]);
 		male.animations.add('attack_R', [292,293,294,295,296,297,195]);
+		
+		//add in enemies
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
+	function placeEnemies(){
+		
+		var placeScale = 0.85;
+		
+		skellies = game.add.group();
+		skellies.createMultiple(5,'skelly',null,true);
+		skellies.forEach(function(skelly){
+						skelly.position = new Phaser.Point(
+						Math.random()*game.width*placeScale+game.width*(1.0-placeScale)/2.0,
+		Math.random()*game.height*placeScale+game.width*(1.0-placeScale)/2.0)
+		},this);
+		console.log("enemies placed!");
+		
+		
+	}
+	
+	
+	
+	
+	
+	function goFS(){
+		    if (game.scale.isFullScreen)
+    {
+        game.scale.stopFullScreen();
+    }
+    else
+    {
+        game.scale.startFullScreen(false);
+    }
+	}
 	
 	function demoScene(w,x,y,z){
 		//destroy previous scene so that it doesn't lag the game
@@ -347,7 +395,7 @@ window.onload = function() {
 	
 	
 	function render(){
-		
+		game.debug.text(game.time.suggestedFps, 32, 32);
 	}
 	
 }
