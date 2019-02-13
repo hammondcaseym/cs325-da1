@@ -3,27 +3,23 @@
 window.onload = function() {
 	
 	var game = new Phaser.Game(800,600,Phaser.AUTO,'game',{preload:preload,create:create,update:update,render:render});
-	
+	var UP = 0;
+	var DOWN = 1;
+	var LEFT = -1;
+	var RIGHT = 2;
 	function preload(){
 		//load the path to the assets to load them properly, and avoid crossOrigin throws
 		game.load.path = 'assets/';
 		game.load.crossOrigin = 'anonymous';
 		
 		//load zerosuit sample
-		game.load.image('zerosuit', 'Sprites/zerosuit.png');
-		
-		
+		//game.load.image('zerosuit', 'Sprites/zerosuit.png');
+
 		//load actual game assets like the character spritesheets and what-not
 		game.load.image('female','Sprites/female.png');
-		game.load.spritesheet('fm_walking_up', 'Sprites/fm_walk_up.png',32,48,8);
-		game.load.spritesheet('fm_walking_down', 'Sprites/fm_walk_down.png',32,48,8);
-		game.load.spritesheet('fm_walking_left', 'Sprites/fm_walk_left.png',32,48,8);
-		game.load.spritesheet('fm_dead', 'Sprites/fm_dead.png',34,51,5);
-		game.load.spritesheet('fm_shoot_up', 'Sprites/fm_walk_up.png',43,58,8);
-		game.load.spritesheet('fm_shoot_down', 'Sprites/fm_walk_up.png',39,51,8);
-		game.load.spritesheet('fm_shoot_left', 'Sprites/fm_walk_up.png',51,58,8);
-		
-		
+		game.load.spritesheet('fm', 'Sprites/fm.png',64,64);
+		game.load.spritesheet('m','Sprites/male_sheet.png',64,64);
+		game.load.spritesheet('ma','Sprites/m_attack_sheet.png',192,192);
 	}
 	
 	//sample assets
@@ -102,14 +98,24 @@ window.onload = function() {
 	
 	var inScene2 = false;
 	var female;
+	var male;
+	var male_attack;
 		function scene2(){
 		inScene2 = true;
 		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
-		female = game.add.sprite(100,100,'female');
+		female = game.add.sprite(game.world.centerX-64,game.world.centerY,'fm');
 		game.physics.enable(female, Phaser.Physics.ARCADE );
 		female.anchor.setTo(0.5,0.5);
 		female.body.collideWorldBounds = true;
 		
+		male = game.add.sprite(game.world.centerX+64,game.world.centerY,'m');
+		game.physics.enable(male, Phaser.Physics.ARCADE );
+		male.anchor.setTo(0.5,0.5);
+		male.body.collideWorldBounds = true;
+		
+		
+		
+		//sprite.animations.add('name',[array of frames],frames/sec,boolean for loop);
 
 
 
@@ -132,88 +138,143 @@ window.onload = function() {
 		
 		if(inScene2){
 			if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
-				if(direction1!=1){
-					direction1 = 1;
-					female.destroy();
-					female = game.add.sprite(female.x, female.y, 'fm_walking_left');
-					
-					female.animations.add('walk_l');
-					female.animations.play('walk_l', 15, true);
-				}else if(direction1 == 1){
-
-					female.animations.play('walk_l', 15, true);
+				if(direction1!=LEFT){
+					direction1 = LEFT;
+					female.animations.add('walk_L', [117,118,119,120,121,122,123,124,125]);
+					female.animations.play('walk_L',15,false);
+				}else if(direction1 == LEFT){
+					female.animations.play('walk_l', 15, false);
 				}
 				female.x -= 4;
-				
 			}
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
-				if(direction1!=0){
-					direction1 = 0;
-					female.destroy();
-					female = game.add.sprite(female.x, female.y, 'fm_walking_left');
-					female.animations.add('walk_r');
-					female.animations.play('walk_r', 15, true);
-					female.scale.x *= -1;
-				}else if(direction1 == 0){
-					female.animations.play('walk_r', 15, true);
-					
+				if(direction1!=RIGHT){
+					direction1 = RIGHT;
+					female.animations.add('walk_R', [143,144,145,146,147,148,149,150,151]);
+					female.animations.play('walk_R',15,false);
+				}else if(direction1 == RIGHT){
+					female.animations.play('walk_R', 15, false);
 				}
 				female.x += 4;
-				
 			}
 
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.W))
 			{
-			
-				if(direction1!=3){
-					direction1 = 3;
-					female.destroy();
-					female = game.add.sprite(female.x, female.y, 'fm_walking_up');
-					
-					
-					female.animations.add('walk_u');
-					female.animations.play('walk_u', 15, true);
-					female.scale.x *= -1;
-				}else if(direction1 == 3){
-					female.animations.play('walk_l', 15, true);
-					
+				if(direction1!=UP){
+					direction1 = UP;
+					female.animations.add('walk_U', [104,105,106,107,108,109,110,111,112]);
+					female.animations.play('walk_U',15,false);
+				}else if(direction1 == UP){
+					female.animations.play('walk_U', 15, false);
 				}
 				female.y -= 4;
-
-			
 			}
 			else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
 			{
-				
-				if(direction1!=4){
-					direction1 = 4;
-					female.destroy();
-					female = game.add.sprite(female.x, female.y, 'fm_walking_down');
-					
-					
-					female.animations.add('walk_d');
-					female.animations.play('walk_d', 15, true);
-					female.scale.x *= -1;
-				}else if(direction1 == 0){
-					female.animations.play('walk_d', 15, true);
+				if(direction1!=DOWN){
+					direction1 = DOWN;
+					female.animations.add('walk_D', [130,131,132,133,134,135,136,137,138]);
+					female.animations.play('walk_D',15,false);
+				}else if(direction1 == DOWN){
+					female.animations.play('walk_D', 15, false);
 					
 				}
 				female.y += 4;
-				
-				
+			} 
+						
+			
+			else{	
+				if(direction1==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+						female.animations.add('attack_D', [234,235,236,237,238,239,240,241,242,243,244,245,246,182]);
+						female.animations.play('attack_D',15,false);
+				} else if(direction1 == UP && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+						female.animations.add('attack_U', [208,209,210,211,212,213,214,215,216,217,218,219,220,156]);
+						female.animations.play('attack_U',15,false);
+				}else if(direction1 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+						female.animations.add('attack_L', [221,222,223,224,225,226,227,228,229,230,231,232,233,169]);
+						female.animations.play('attack_L',15,false);
+				}else if((direction1 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+						female.animations.add('attack_R', [247,248,249,250,251,252,253,254,255,256,257,258,259,195]);
+						female.animations.play('attack_R',15,false);
+						
+					}
 			}
-			else{
-				female.frame = 0; //sets current animation to frame 0 to pause the character in any direction, more realistic, less clunky
+			
+			
+			/*
+			
+			END FEMALE MOVEMENT
+			START MALE MOVEMENT
+			
+			*/
+			
+					
+			
+			if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+				if(direction2!=LEFT){
+					direction2 = LEFT;
+					male.animations.add('walk_L', [117,118,119,120,121,122,123,124,125]);
+					male.animations.play('walk_L',15,true);
+				}else if(direction2 == LEFT){
+					male.animations.play('walk_l', 15, true);
+				}
+				male.x -= 4;
+			}else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+				if(direction2!=RIGHT){
+					direction2 = RIGHT;
+					male.animations.add('walk_R', [143,144,145,146,147,148,149,150,151]);
+					male.animations.play('walk_R',15,true);
+				}else if(direction2 == RIGHT){
+					male.animations.play('walk_R', 15, true);
+				}
+				male.x += 4;
+			}else if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
+			{
+				if(direction2!=UP){
+					direction2 = UP;
+					male.animations.add('walk_U', [104,105,106,107,108,109,110,111,112]);
+					male.animations.play('walk_U',15,true);
+				}else if(direction2 == UP){
+					male.animations.play('walk_U', 15, true);
+				}
+				male.y -= 4;
+			}
+			else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+				if(direction2!=DOWN){
+					direction2 = DOWN;
+					male.animations.add('walk_D', [130,131,132,133,134,135,136,137,138]);
+					male.animations.play('walk_D',15,true);
+				}else if(direction2 == DOWN){
+					male.animations.play('walk_D', 15, true);
 					
 				}
+				male.y += 4;
+			}else{	
+				if(direction2==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+						male.loadTexture('ma',16,false);
+						male.animations.add('attack_D', [17,18,19,20,21,16]);
+						male.animations.play('attack_D',15,false);
+						male.loadTexture('m',138,false);
+				} else if(direction2 == UP && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+						male.animations.add('attack_U', [208,209,210,211,212,213,214,215,216,217,218,219,220,156]);
+						male.animations.play('attack_U',15,false);
+				}else if(direction2 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+						male.animations.add('attack_L', [221,222,223,224,225,226,227,228,229,230,231,232,233,169]);
+						male.animations.play('attack_L',15,false);
+				}else if((direction2 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+						male.animations.add('attack_R', [247,248,249,250,251,252,253,254,255,256,257,258,259,195]);
+						male.animations.play('attack_R',15,false);
+						
+					}
 			}
+			
 		
-		}
+			}
 			
-			
+		
 	
 		
-		
+	}
 		
 
 	
