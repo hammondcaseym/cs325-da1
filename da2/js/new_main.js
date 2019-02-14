@@ -25,6 +25,7 @@ window.onload = function() {
 		game.load.audio('arr','sounds/arrow.wav');
 		game.load.audio('sword','sounds/sword.wav');
 		game.load.audio('bones','sounds/bones.wav');
+		game.load.audio('groan','sounds/groan.wav');
 	}
 
 	var player1, player2; //players
@@ -41,14 +42,14 @@ window.onload = function() {
 	var button; //button to press
 	var title, subtitle, dir_line1, dir_line2, dir_line3;
 
-	var arrow_sound, bones, swing;
+	var arrow_sound, bones, swing,groan;
 
 	function create(){
 		
 		arrow_sound = game.add.audio('arr');
 		bones = game.add.audio('bones');
 		swing = game.add.audio('sword');
-
+		groan = game.add.audio('groan');
 		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
 
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -305,10 +306,12 @@ window.onload = function() {
 
 							skelly.animations.play('skel_L',15,false);
 											//console.log('should be moving left');
+						
 							} else {
 
 										skelly.animations.play('skel_R',15,false);
 											//console.log('should be moving right');
+											
 							}
 
 
@@ -337,6 +340,7 @@ window.onload = function() {
 						}else{
 							bones.play();
 						}
+
 
 				}
 
