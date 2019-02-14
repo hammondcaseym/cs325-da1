@@ -11,10 +11,6 @@ window.onload = function() {
 		//load the path to the assets to load them properly, and avoid crossOrigin throws
 		game.load.path = 'assets/';
 		game.load.crossOrigin = 'anonymous';
-		
-		//load zerosuit sample
-		//game.load.image('zerosuit', 'Sprites/zerosuit.png');
-
 		//load actual game assets like the character spritesheets and what-not
 		game.load.spritesheet('button', 'Sprites/button.png',128,64);
 		game.load.image('flake','Sprites/snowflake.png');
@@ -23,40 +19,40 @@ window.onload = function() {
 		game.load.spritesheet('m','Sprites/male_sheet.png',64,64);
 		game.load.spritesheet('ma','Sprites/m_attack_sheet.png',192,192);
 		game.load.spritesheet('skelly','Sprites/skelly.png',64,64);
+		game.load.image('arrUp', 'Sprites/arrow_u.png');
+		game.load.image('arrLeft','Sprites/arrow_L.png');
+		game.load.image('arrRight','Sprites/arrow_r.png');
+		game.load.image('arrDown','Sprites/arrow_d.png');
 	}
-	
-	//sample assets
-	
-	//var zerosuit;
-	
-	//end sample assets
-	
-	
+		
 	var player1, player2; //players
 	var item; //collectible item
 	var hp1, hp2; //hp amount for each player
-	var attack1,attack2; //different attack types for each player
+	var direction1 = -1; //player 1's direction
+	var direction2 = -1; //player 2's direction
 
 	var timer = 6;
 	var timer_ms;
 
-	var direction1 = -1;
-	var direction2 = -1; //direction that each player is currently facing
 	var text; //any text that appears on the screen
-	var button; //button to press
-	var title,subtitle,subtitle2;
-	var snowflake;
+	var button; //button to press	
 	var title, subtitle, dir_line1, dir_line2, dir_line3;
+	
+	
 	function create(){
 	
 		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
-
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		
-	
-	
+		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+
 		game.time.desiredFps = 30;
 	
+		titleScreen();
+		
+	}
+	
+	function titleScreen(){
+		
 		var style_title = { font: "32px Forte", fill: "#000000"};
 		var style_subtitle = {font: "24px Forte", fill: "#000000"};
 		var style_dir = {font: "24px Corbel", fill: "#000000"};
@@ -70,16 +66,7 @@ window.onload = function() {
 		
 		button = game.add.button(300, 100, 'button', scene2, this, 2,1,0);
 		
-		
-			
-		
-		
 	}
-	
-	/*
-*/
-
-	
 
 	var skelly;
 	var skellies;
@@ -88,15 +75,20 @@ window.onload = function() {
 	var female;
 	var male;
 	var male_attack;
-		function scene2(){
-			goFS();
-			button.destroy();
-			demoScene(title,subtitle,dir_line1,dir_line2);
-			dir_line3.destroy();
+	
+	
+	function scene2(){
+		//goFS();
+		button.destroy();
+		demoScene(title,subtitle,dir_line1,dir_line2);
+		dir_line3.destroy();
 			
 			
 		inScene2 = true;
+		
+		
 		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
+		
 		female = game.add.sprite(game.world.centerX-64,game.world.centerY,'fm');
 		game.physics.enable(female, Phaser.Physics.ARCADE );
 		female.anchor.setTo(0.5,0.5);
@@ -107,18 +99,11 @@ window.onload = function() {
 		male.anchor.setTo(0.5,0.5);
 		male.body.collideWorldBounds = true;
 		
-		
-		skelly = game.add.sprite('skelly',[14]);
-		
-		
-		
-		placeEnemies();
-		
-		
-		
-		
-		
-		
+		/*skelly = game.add.sprite(100,100,'skelly',[14]);
+		game.physics.enable(skelly,Phaser.Physics.ARCADE);
+		skelly.anchor.setTo(0.5,0.5);
+		skelly.body.collideWorldBounds = true;*/
+
 		//sprite.animations.add('name',[array of frames],frames/sec,boolean for loop);
 		female.animations.add('fmwalk_L', [117,118,119,120,121,122,123,124,125]);
 		female.animations.add('fmwalk_R', [143,144,145,146,147,148,149,150,151]);
@@ -144,7 +129,9 @@ window.onload = function() {
 		
 		
 		
-		
+		placeEnemies();
+
+
 		
 		
 		
@@ -157,14 +144,17 @@ window.onload = function() {
 	function placeEnemies(){
 		
 		var placeScale = 0.85;
+		skelly = game.add.sprite(Math.random()*game.width*placeScale+game.width*(1.0-placeScale)/2.0, Math.random()*game.height*placeScale+game.width*(1.0-placeScale)/2.0,'skelly',14);
 		
-		skellies = game.add.group();
-		skellies.createMultiple(5,'skelly',null,true);
-		skellies.forEach(function(skelly){
-						skelly.position = new Phaser.Point(
-						Math.random()*game.width*placeScale+game.width*(1.0-placeScale)/2.0,
-		Math.random()*game.height*placeScale+game.width*(1.0-placeScale)/2.0)
-		},this);
+		skelly.animations.add('skel_L',[117,118,119,120,121,122,123,124,125]);
+		skelly.animations.add('skel.R', [143,144,145,146,147,148,149,150,151]);
+		skelly.animations.add('skel_U', [104,105,106,107,108,109,110,111,112]);
+		skelly.animations.add('skel_D', [130,131,132,133,134,135,136,137,138]);
+		
+		//skelly.animations.play('skel_L', 15, true);
+		//skellies = game.add.group();
+		//skellies.createMultiple(5,'skelly',[14],null,true);
+
 		console.log("enemies placed!");
 		
 		
