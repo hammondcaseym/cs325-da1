@@ -21,6 +21,10 @@ window.onload = function() {
 		game.load.spritesheet('skelly','Sprites/skelly.png',64,64);
 		game.load.image('arrow','Sprites/arrow_r.png');
 		game.load.image('bg','Sprites/background.png');
+		
+		game.load.audio('arr','sounds/arrow.wav');
+		game.load.audio('sword','sounds/sword.wav');
+		game.load.audio('bones','sounds/bones.wav');
 	}
 
 	var player1, player2; //players
@@ -37,8 +41,13 @@ window.onload = function() {
 	var button; //button to press
 	var title, subtitle, dir_line1, dir_line2, dir_line3;
 
+	var arrow_sound, bones, swing;
 
 	function create(){
+		
+		arrow_sound = game.add.audio('arr');
+		bones = game.add.audio('bones');
+		swing = game.add.audio('sword');
 
 		game.stage.backgroundColor = '#9ec8ef'; //makes background color slightly blue
 
@@ -322,6 +331,10 @@ window.onload = function() {
 					skelly.animations.play('skel_ded', 15, false, true);
 					scorep2 += 100;
 					pointsp2.setText(scorep2);
+					if(bones.isPlaying){
+						}else{
+							bones.play();
+						}
 
 				}
 
@@ -332,19 +345,22 @@ window.onload = function() {
 						arrow.trackSprite(female, 3, 50);
 						arrow.fireAngle = Phaser.ANGLE_DOWN;
 						arrow.fire();
-
+						
 					}else if(direction1 == UP){
 						arrow.trackSprite(female, 3, -50);
 						arrow.fireAngle = Phaser.ANGLE_UP;
 						arrow.fire();
+						
 					}else if(direction1 == LEFT){
 						arrow.trackSprite(female, -50, 3);
 						arrow.fireAngle = Phaser.ANGLE_LEFT;
 						arrow.fire();
+						
 					} else if(direction1 == RIGHT){
 						arrow.trackSprite(female, 50, 3);
 						arrow.fireAngle = Phaser.ANGLE_RIGHT;
 						arrow.fire();
+						
 					}
 					skellies.forEach(function(skelly){
 						if((Math.sqrt((skelly.x - arrow.x)*(skelly.x - arrow.x) + (skelly.y - arrow.y)*(skelly.y - arrow.y)) <= 40)) {
@@ -352,6 +368,10 @@ window.onload = function() {
 							skelly.kill();
 							scorep1 += 200;
 							pointsp1.setText(scorep1);
+							if(bones.isPlaying){
+							}else{
+								bones.play();
+							}
 						}
 					},this);
 
@@ -419,21 +439,39 @@ window.onload = function() {
 						fidle = false;
 						fmattacking = true;
 						female.animations.play('fmattack_D',30,false);
-
+						if(arrow_sound.isPlaying){
+							//arrow_sound.play();
+						}else{
+							arrow_sound.play();
+						}
 				} else if(direction1 == UP && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
 						fidle = false;
 						fmattacking = true;
 						female.animations.play('fmattack_U',30,false);
-
+						if(arrow_sound.isPlaying){
+							//arrow_sound.play();
+						}else{
+							arrow_sound.play();
+						}
 				}else if(direction1 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
 						fidle = false;
 						fmattacking = true;
 						female.animations.play('fmattack_L',30,false);
+						if(arrow_sound.isPlaying){
+							//arrow_sound.play();
+						}else{
+							arrow_sound.play();
+						}
 
 				}else if((direction1 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
 						fidle = false;
 						fmattacking = true;
 						female.animations.play('fmattack_R',30,false);
+						if(arrow_sound.isPlaying){
+							//arrow_sound.play();
+						}else{
+							arrow_sound.play();
+						}
 
 					}
 				else{
@@ -508,19 +546,38 @@ window.onload = function() {
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_D',15,false);
+						if(swing.isPlaying){
+							//arrow_sound.play();
+						}else{
+							swing.play();
+						}
 				} else if(direction2 == UP && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_U',15,false);
+						if(swing.isPlaying){
+							//arrow_sound.play();
+						}else{
+							swing.play();
+						}
 				}else if(direction2 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_L',15,false);
+						if(swing.isPlaying){
+							//arrow_sound.play();
+						}else{
+							swing.play();
+						}
 				}else if((direction2 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_R',15,false);
-
+						if(swing.isPlaying){
+							//arrow_sound.play();
+						}else{
+							swing.play();
+						}
 					}
 					else{
 						mattacking = false;
