@@ -94,6 +94,8 @@ window.onload = function() {
 	var pointsp2;
 	function scene2(){
 		goFS();
+		scorep1 = 0;
+		scorep2 = 0;
 		button.destroy();
 		demoScene(title,subtitle,dir_line1,dir_line2);
 		dir_line3.destroy();
