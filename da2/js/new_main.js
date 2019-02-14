@@ -19,10 +19,7 @@ window.onload = function() {
 		game.load.spritesheet('m','Sprites/male_sheet.png',64,64);
 		game.load.spritesheet('ma','Sprites/m_attack_sheet.png',192,192);
 		game.load.spritesheet('skelly','Sprites/skelly.png',64,64);
-		game.load.image('arrUp', 'Sprites/arrow_u.png');
-		game.load.image('arrLeft','Sprites/arrow_L.png');
 		game.load.image('arrow','Sprites/arrow_r.png');
-		game.load.image('arrDown','Sprites/arrow_d.png');
 		game.load.image('bg','Sprites/background.png');
 	}
 
@@ -64,7 +61,7 @@ window.onload = function() {
 
 		dir_line1 = game.add.text(150, 300, "Player 1                                       Player 2", style_dir);
 		dir_line2 = game.add.text(150, 350, "WASD for movement.          ARROW KEYS for movement.", style_dir);
-		dir_line3 = game.add.text(150, 400,   "(hold)L-Shift for Attack        (hold)R-CTRL for Attack", style_dir);
+		dir_line3 = game.add.text(150, 400,   "(hold)SHIFT for Attack        (hold)?/ for Attack", style_dir);
 
 
 
@@ -507,19 +504,19 @@ window.onload = function() {
 				}
 				male.y += 4;
 			}else{
-				if(direction2==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+				if(direction2==DOWN && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_D',15,false);
-				} else if(direction2 == UP && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+				} else if(direction2 == UP && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_U',15,false);
-				}else if(direction2 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+				}else if(direction2 == LEFT && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_L',15,false);
-				}else if((direction2 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+				}else if((direction2 == RIGHT) && game.input.keyboard.isDown(Phaser.Keyboard.QUESTION_MARK)){
 						midle = false;
 						mattacking = true;
 						male.animations.play('attack_R',15,false);
