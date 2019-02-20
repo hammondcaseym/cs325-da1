@@ -15,7 +15,7 @@ BasicGame.Preloader.prototype = {
 
 		//	These are the assets we loaded in Boot.js
 		//	A nice sparkly background and a loading progress bar
-		this.background = this.add.sprite(0, 0, 'preloaderBackground');
+		this.background = this.add.sprite(0, 0, 'preloaderScene');
 		this.preloadBar = this.add.sprite(300, 400, 'preloaderBar');
 
 		//	This sets the preloadBar sprite as a loader sprite.
@@ -26,11 +26,25 @@ BasicGame.Preloader.prototype = {
 		//	Here we load the rest of the assets our game needs.
 		//	As this is just a Project Template I've not provided these assets, swap them for your own.
 		this.load.image('titlePage', 'assets/title.jpg');
-		this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
-		this.load.audio('titleMusic', ['assets/Poppers and Prosecco.mp3']);
+		this.load.spritesheet('next', 'assets/Ninja/next.png', 96,48);
+		this.load.audio('titleMusic', 'assets/sounds/Z&C_DRI.mp3');
 		//	+ lots of other required assets here
-        this.load.image( 'logo', 'assets/phaser.png' );
-				this.load.spritesheet('ninya', 'assets/Ninja/ninya2.png', 64,128);
+    this.load.image( 'scene2', 'assets/Ninja/scene2.gif' );
+		this.load.image('scene3', 'assets/Ninja/poppies.png');
+
+		this.load.spritesheet('ninja', 'assets/Ninja/ninja.png', 64,64);
+		this.load.spritesheet('thug', 'assets/Ninja/thug.png', 64,64);
+		this.load.spritesheet('bel', 'assets/Ninja/bel.png', 64,64);
+
+		this.load.image('lvl1', 'assets/Ninja/lvl1.PNG');
+		this.load.image('bosslvl', 'assets/Ninja/bossRoom.png');
+
+
+
+
+
+
+
 	},
 
 	create: function () {

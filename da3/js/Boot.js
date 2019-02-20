@@ -39,6 +39,9 @@ BasicGame.Boot.prototype = {
         this.load.image('preloaderBackground', 'assets/preloader_background.jpg');
         this.load.image('preloaderBar', 'assets/preloader_bar.png');
         this.load.spritesheet('ninya', 'assets/Ninja/ninya.png', 64,128);
+        this.load.image('preloaderScene', 'assets/Ninja/preloading_ninja.png')
+        this.load.image('letterScene', 'assets/Ninja/ninja_letters.png');
+        this.load.image('maintitle', 'assets/Ninja/maintitle.png');
 
     },
 

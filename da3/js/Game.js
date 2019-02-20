@@ -28,47 +28,65 @@ BasicGame.Game = function (game) {
     // For optional clarity, you can initialize
     // member variables here. Otherwise, you will do it in create().
   //  this.bouncy = null;
-    this.nin = null;
+  this.ctr = 4;
+  this.text1 = null;
+  this.text2 = null;
+  this.text3 = null;
+  this.text4 = null;
+  this.style = { font: "24px Times New Roman", fill: "#000000"};
+  this.button2 = null;
+  this.button3 = null;
+  this.ninja = null;
 };
 
 BasicGame.Game.prototype = {
 
     create: function () {
-
-        this.nin = this.game.add.sprite(100,100,'ninya');
-        console.log("successfully added sprite");
-        this.nin.scale.setTo(2.0,2.0);
-        this.nin.animations.add('nin',[8,9,10,11,12,13,14,15]);
-        console.log("successfully added animations");
-        this.nin.animations.play('nin',6,true);
-        console.log("successfully played animation");
-
-
-        //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
-
-        // Create a sprite at the center of the screen using the 'logo' image.
-        //this.bouncy = this.game.add.sprite( this.game.world.centerX, this.game.world.centerY, 'logo' );
-        // Anchor the sprite at its center, as opposed to its top-left corner.
-        // so it will be truly centered.
-        //this.bouncy.anchor.setTo( 0.5, 0.5 );
-
-        // Turn on the arcade physics engine for this sprite.
-        //this.game.physics.enable( this.bouncy, Phaser.Physics.ARCADE );
-        // Make it bounce off of the world bounds.
-        //this.bouncy.body.collideWorldBounds = true;
-
-        // Add some text using a CSS style.
-        // Center it in X, and position its top 15 pixels from the top of the world.
-        //var style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
-        //var text = this.game.add.text( this.game.world.centerX, 15, "Build something amazing.", style );
-        //text.anchor.setTo( 0.5, 0.0 );
-
-        // When you click on the sprite, you go back to the MainMenu.
-        //this.bouncy.inputEnabled = true;
-        //this.bouncy.events.onInputDown.add( function() { this.quitGame(); }, this );
+      this.add.sprite(0, 0, 'letterScene');
+      this.text1 = this.game.add.text(25, 25, "The letters I wrote to my wife... they just keep getting sent back...", this.style);
+      this.next_button = this.add.button( 450, 400, 'next', this.scene2, this, 1,0,2);
     },
 
+
+    scene2: function () {
+      this.add.sprite(0,0,'scene2');
+              this.text2 = this.game.add.text(25, 25, "My wife is gone... and I know who has her...", this.style);
+              this.button2 = this.add.button( 450, 400, 'next', this.scene3, this, 1,0,2);
+    },
+    scene3: function (){
+      this.add.sprite(0,0,'scene3');
+              this.text3 = this.game.add.text(25, 25, "It's up to me to bring her back home.", this.style);
+              this.button3 = this.add.button( 450, 400, 'next', this.startGame, this, 1,0,2);
+    },
+
+    startGame: function (){
+      this.world.setBounds(0,0,1000,1212);
+      this.add.sprite(0,0,'lvl1');
+      console.log('reached!');
+      this.ninja = this.add.sprite(350,25,'ninja');
+      this.ninja.animations.add('idle', [130], 15, false);
+      this.ninja.animations.play('idle');
+
+
+
+
+    },
+
+    nextScene: function (pointer) {
+
+      if(this.ctr >= 1){
+        this.ctr--;
+            console.log(this.ctr);
+          }else{
+            this.ctr = 0;
+            this.startGame;
+          }
+    },
+
+
     update: function () {
+
+
 
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
 
