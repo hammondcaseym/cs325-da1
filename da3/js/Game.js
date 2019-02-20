@@ -37,9 +37,10 @@ BasicGame.Game.prototype = {
 
         this.nin = this.game.add.sprite(100,100,'ninya');
         console.log("successfully added sprite");
-        this.nin.animations.add('nin',[0,1,2,3,4,5,6,7]);
+        this.nin.scale.setTo(2.0,2.0);
+        this.nin.animations.add('nin',[8,9,10,11,12,13,14,15]);
         console.log("successfully added animations");
-        this.nin.animations.play('nin',1,true);
+        this.nin.animations.play('nin',6,true);
         console.log("successfully played animation");
 
 
