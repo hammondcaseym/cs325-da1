@@ -33,6 +33,7 @@ BasicGame.Preloader.prototype = {
 		this.load.image('scene3', 'assets/Ninja/poppies.png');
 
 		this.load.spritesheet('ninja', 'assets/Ninja/ninja.png', 64,64);
+		this.load.spritesheet('star', 'assets/Ninja/shuriken.png', 32,32);
 		this.load.spritesheet('thug', 'assets/Ninja/thug.png', 64,64);
 		this.load.spritesheet('bel', 'assets/Ninja/bel.png', 64,64);
 
