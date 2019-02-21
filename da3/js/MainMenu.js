@@ -19,8 +19,7 @@ BasicGame.MainMenu.prototype = {
 		console.log('music should be playing');
 
 		this.add.sprite(0, 0, 'maintitle');
-		this.add.text(25,400, "WASD to Move", {font: "18px Courier", fill: "#FFFFFF"});
-		this.add.text(25,450, "HOLD LShift to throw shuriken", {font: "18px Courier", fill: "#FFFFFF"});
+
 
 
 		this.next_button = this.add.button( 450, 400, 'next', this.startGame, this, 1,0,2);

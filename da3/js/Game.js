@@ -282,15 +282,20 @@ BasicGame.Game = function (game) {
   this.text3 = null;
   this.text4 = null;
   this.style = { font: "24px Arial", fill: "#000000"};
+  this.style2 = { font: "24px Arial", fill: "#FFFFFF"};
   this.button2 = null;
   this.button3 = null;
   this.ninja = null;
   this.current = 0;
   this.thugs = [];
   this.HPtext = null;
+  this.HPtext2 = null;
   this.HP = null;
+  this.HP2 = null;
   this.pointsText = null;
+  this.pointsText2 = null;
   this.numPoints = null;
+  this.numPoints2 = null;
   this.points = 0;
   this.restartButton = null;
   this.bgLVL1 = null;
@@ -337,6 +342,8 @@ BasicGame.Game.prototype = {
               this.game.add.text(200, 100, "  kidnapped his beloved. So he folds his letters into", {font: '20px Arial', fill:'#000000'});
               this.game.add.text(200, 125, "  shurikens, and goes out to find her...", {font: '20px Arial', fill:'#000000'});
               this.button3 = this.add.button( 450, 400, 'next', this.startGame, this, 1,0,2);
+              this.add.text(25,400, "WASD to Move", {font: "18px Courier", fill: "#000000"});
+              this.add.text(25,450, "HOLD LShift to throw shuriken", {font: "18px Courier", fill: "#000000"});
     },
 
 
@@ -354,6 +361,12 @@ BasicGame.Game.prototype = {
       this.HP = this.game.add.text(275,25, 100,this.style);
       this.HP.fixedToCamera = true;
       this.HP.cameraOffset.setTo(275,25);
+      this.HPtext2 = this.game.add.text(203,27,"HP: ",this.style2);
+      this.HPtext2.fixedToCamera = true;
+      this.HPtext2.cameraOffset.setTo(203,27);
+      this.HP2 = this.game.add.text(277,27, 100,this.style2);
+      this.HP2.fixedToCamera = true;
+      this.HP2.cameraOffset.setTo(277,27);
 
       this.pointsText = this.game.add.text(500,25,"POINTS: ",this.style);
       this.pointsText.fixedToCamera = true;
@@ -361,6 +374,12 @@ BasicGame.Game.prototype = {
       this.numPoints = this.game.add.text(650,25, this.points,this.style);
       this.numPoints.fixedToCamera = true;
       this.numPoints.cameraOffset.setTo(650,25);
+      this.pointsText2 = this.game.add.text(502,27,"POINTS: ",this.style2);
+      this.pointsText2.fixedToCamera = true;
+      this.pointsText2.cameraOffset.setTo(502,27);
+      this.numPoints2 = this.game.add.text(652,27, this.points,this.style2);
+      this.numPoints2.fixedToCamera = true;
+      this.numPoints2.cameraOffset.setTo(652,27);
 
       this.deathsound = this.add.audio('die');;
       this.shurikensound = this.add.audio('swish');
@@ -371,6 +390,24 @@ BasicGame.Game.prototype = {
       this.t4 = this.add.text(25,100,"You're one step closer to finding your beloved!",  {font:"32px Arial", fill: "#34a4c9"});
       this.t3 = this.add.text(150, 500, "Refresh the page to try this level again!", {font:"32px Arial", fill: "#34a4c9"});
 
+
+
+      this.d1 = this.add.text(250, 300, "You are dead.", {font:"32px Arial", fill: "#c40303"});
+      //console.log("logged");
+      this.d2 = this.add.text(250, 350, "Total Points: " + this.points, {font:"32px Arial", fill: "#c40303"});
+      this.d3 = this.add.text(250, 500, "Refresh the page to try again...", {font:"32px Arial", fill: "#c40303"});
+
+      this.d1.fixedToCamera = true;
+      this.d1.cameraOffset.setTo(250,300);
+      this.d1.visible = false;
+
+      this.d2.fixedToCamera = true;
+      this.d2.cameraOffset.setTo(250,350);
+      this.d2.visible = false;
+
+      this.d3.fixedToCamera = true;
+      this.d3.cameraOffset.setTo(250,500);
+      this.d3.visible = false;
 
       this.t1.fixedToCamera = true;
       this.t1.cameraOffset.setTo(150,300);
@@ -414,6 +451,7 @@ BasicGame.Game.prototype = {
       this.ninja.onProjHit = function(thug){
         this.game.points+=100;
         this.game.numPoints.setText(this.game.points);
+        this.game.numPoints2.setText(this.game.points);
         this.game.deathsound.play();
         thug.destroy();
 
@@ -525,10 +563,9 @@ var placeScale = 0.85;
 
 
       this.stage.backgroundColor = '#000000';
-      var t1 = this.add.text(250, 300, "You are dead.", {font:"32px Arial", fill: "#c40303"});
-      //console.log("logged");
-      var t2 = this.add.text(250, 350, "Total Points: " + this.points, {font:"32px Arial", fill: "#c40303"});
-      var t3 = this.add.text(250, 500, "Refresh the page to try again...", {font:"32px Arial", fill: "#c40303"});
+      this.d1.visible = true;
+      this.d2.visible = true;
+      this.d3.visible = true;
       this.current = 0;
       console.log(this.current);
     },
@@ -589,6 +626,7 @@ var placeScale = 0.85;
           }
 
           this.HP.setText(this.ninja.hp < 0 ? 0 : this.ninja.hp);
+            this.HP2.setText(this.ninja.hp < 0 ? 0 : this.ninja.hp);
     } else if(this.current == 2){
       console.log("in death state");
       //waiting...
