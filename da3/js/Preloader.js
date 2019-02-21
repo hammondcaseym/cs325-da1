@@ -28,6 +28,8 @@ BasicGame.Preloader.prototype = {
 		this.load.image('titlePage', 'assets/title.jpg');
 		this.load.spritesheet('next', 'assets/Ninja/next.png', 96,48);
 		this.load.audio('titleMusic', 'assets/sounds/Z&C_DRI.mp3');
+		this.load.audio('swish', 'assets/sounds/swish.wav');
+		this.load.audio('die', 'assets/sounds/death.wav');
 		//	+ lots of other required assets here
     this.load.image( 'scene2', 'assets/Ninja/scene2.gif' );
 		this.load.image('scene3', 'assets/Ninja/poppies.png');
