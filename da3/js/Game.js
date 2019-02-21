@@ -331,16 +331,19 @@ BasicGame.Game.prototype = {
       this.s2.destroy();
       this.text2.destroy();
       this.button2.destroy();
-      this.s3 = this.add.sprite(0,0,'scene3');
-              this.text3 = this.game.add.text(25, 25, "It's up to me to bring her back home.", this.style);
+      this.stage.backgroundColor = '#FFFFFF';
+              this.game.add.text(200, 50, "After a lone ninja keeps getting returned letters", {font: '20px Arial', fill:'#000000'});
+              this.game.add.text(200, 75, "  returned, he suspects the Japanese Mafia has", {font: '20px Arial', fill:'#000000'});
+              this.game.add.text(200, 100, "  kidnapped his beloved. So he folds his letters into", {font: '20px Arial', fill:'#000000'});
+              this.game.add.text(200, 125, "  shurikens, and goes out to find her...", {font: '20px Arial', fill:'#000000'});
               this.button3 = this.add.button( 450, 400, 'next', this.startGame, this, 1,0,2);
     },
 
 
 
     startGame: function (){
-      this.s3.destroy();
-      this.text3.destroy();
+
+
       this.button3.destroy();
       this.world.setBounds(0,0,1000,1212);
       this.bgLVL1 = this.add.sprite(0,0,'lvl1');
