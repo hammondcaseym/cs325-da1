@@ -41,7 +41,7 @@ GameStates.makePreloader = function( game ) {
 			game.load.spritesheet('button', 'assets/button.png', 270, 65);
 			game.load.spritesheet('q_button', 'assets/question_button.png', 256, 64);
 			game.load.spritesheet('continue', 'assets/continue.png', 188, 64);
-			
+			game.load.spritesheet('guess','assets/guess.png',270,65);
 			
 				game.load.image('painting','assets/painting_debug.png');
 				game.load.image('computer','assets/computer_debug.png');

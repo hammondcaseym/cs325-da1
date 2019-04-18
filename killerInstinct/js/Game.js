@@ -77,6 +77,8 @@ GameStates.makeGame = function( game, shared ) {
 	var qs1 = null;
 	var qs2 = null;
 	var qs3 = null;
+	
+	var guess = null;
 
 	
     
@@ -136,8 +138,8 @@ GameStates.makeGame = function( game, shared ) {
 		
 		quitInspectButton = game.add.button(110,335,'button',closeQuestioning,this,2,1,0); 
 		
-
 		
+		guess = game.add.button(500,50,'guess',guessing,this,2,1,0);
 		
 		 
 		
@@ -146,11 +148,31 @@ GameStates.makeGame = function( game, shared ) {
 	function closeQuestioning(){
 		insp.alpha = 0.0;
 		quitInspectButton.destroy();
+		guess.destroy();
 		if(qs1!=null) qs1.destroy();
 		if(qs2!=null) qs2.destroy();
 		if(qs3!=null) qs3.destroy();
 		
 		if(insp_text != null) insp_text.destroy();
+	}
+	
+	function guessing(){
+		//insp.alpha = 0.0;
+		quitInspectButton.destroy();
+		guess.destroy();
+		if(qs1!=null) {
+			insp_text.setText("Derek was NOT the killer...                          Hit Continue at the Bottom to guess again!");
+			
+		}
+		if(qs2!=null) {
+			insp_text.setText("Harold was NOT the killer...                          Hit Continue at the Bottom to guess again!");
+			
+		}
+		if(qs3!=null) {
+			insp_text.setText("You were right!  Michelle WAS the killer!");
+		}
+		
+		
 	}
 	
 	function inspect(i){
